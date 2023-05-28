@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types'
 import { firestore } from './firebase';
 
-function MessageList() {
+function MessageList({ user }) {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    const unsubscribe = firestore.collection('messages')
+    const unsubscribe = firestore
+      .collection('messages')
+      .where('uid', '==', user.uid) // Filter messages by user's uid
       .onSnapshot((snapshot) => {
         const messages = snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -15,7 +18,7 @@ function MessageList() {
       });
 
     return () => unsubscribe();
-  }, []);
+  }, [user]);
 
   return (
     <div>
@@ -28,5 +31,9 @@ function MessageList() {
     </div>
   );
 }
+
+MessageList.propTypes = {
+  user: PropTypes.object.isRequired,
+};
 
 export default MessageList;
