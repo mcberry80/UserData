@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { auth, googleAuthProvider } from './firebase';
-import Data from './data';
+import Login from './Login';
+import Data from './Data';
+import MessagesList from './MessagesList';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -28,15 +30,16 @@ function App() {
   return (
     <div>
       <h1>My App</h1>
-      {user ?
+      {user ? (
         <div>
           <p>Welcome, {user.displayName}</p>
           <button onClick={signOut}>Sign Out</button>
-          <Data />
+          <Data user={user} />
+          <MessagesList user={user} />
         </div>
-        :
-        <button onClick={signInWithGoogle}>Sign in with Google</button>
-      }
+      ) : (
+        <Login signInWithGoogle={signInWithGoogle} />
+      )}
     </div>
   );
 }
