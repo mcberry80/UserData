@@ -1,16 +1,9 @@
+import PropTypes from 'prop-types';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, googleAuthProvider } from './firebase';
+import { auth } from './firebase';
 
-function Login() {
+function Login({ signInWithGoogle }) {
   const [user] = useAuthState(auth);
-
-  const signInWithGoogle = async () => {
-    try {
-      await auth.signInWithPopup(googleAuthProvider);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   return (
     <div>
@@ -22,5 +15,10 @@ function Login() {
     </div>
   );
 }
+
+Login.propTypes = {
+  signInWithGoogle: PropTypes.func.isRequired,
+};
+
 
 export default Login;

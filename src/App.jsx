@@ -35,7 +35,8 @@ function App() {
           <p>Welcome, {user.displayName}</p>
           <button onClick={signOut}>Sign Out</button>
           <Data user={user} />
-          <MessageList user={user} />
+          Messages:
+          <MessageList />
         </div>
       ) : (
         <Login signInWithGoogle={signInWithGoogle} />

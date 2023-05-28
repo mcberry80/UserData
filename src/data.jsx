@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { firestore } from './firebase';
+import { firebase, firestore } from './firebase';
 import PropTypes from 'prop-types';
 
 function Data({ user }) {
@@ -15,8 +15,8 @@ function Data({ user }) {
       const messageData = {
         uid: user.uid,
         displayName: user.displayName,
-        message: message,
-        createdAt: firestore.FieldValue.serverTimestamp(),
+        text: message,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       };
 
       firestore
