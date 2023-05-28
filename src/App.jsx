@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { auth, googleAuthProvider } from './firebase';
 import Login from './Login';
 import Data from './Data';
-import MessagesList from './MessagesList';
+import MessageList from './MessageList';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -35,7 +35,7 @@ function App() {
           <p>Welcome, {user.displayName}</p>
           <button onClick={signOut}>Sign Out</button>
           <Data user={user} />
-          <MessagesList user={user} />
+          <MessageList user={user} />
         </div>
       ) : (
         <Login signInWithGoogle={signInWithGoogle} />
