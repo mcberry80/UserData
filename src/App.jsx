@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { auth, googleAuthProvider } from './firebase';
 import Login from './Login';
 import Data from './Data';
@@ -6,6 +6,19 @@ import MessageList from './MessageList';
 
 function App() {
   const [user, setUser] = useState(null);
+
+  
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const signInWithGoogle = () => {
     auth.signInWithPopup(googleAuthProvider)
@@ -35,7 +48,6 @@ function App() {
           <p>Welcome, {user.displayName}</p>
           <button onClick={signOut}>Sign Out</button>
           <Data user={user} />
-          Messages:
           <MessageList user={user}/>
         </div>
       ) : (

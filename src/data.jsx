@@ -1,52 +1,37 @@
-import { useState } from 'react';
+
 import { firebase, firestore } from './firebase';
 import PropTypes from 'prop-types';
 
 function Data({ user }) {
-  const [message, setMessage] = useState('');
-
-  const handleChange = (e) => {
-    setMessage(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (user && message) {
-      const messageData = {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const message = event.target.elements.message.value;
+    if (message) {
+      firestore.collection('messages').add({
         uid: user.uid,
-        displayName: user.displayName,
         text: message,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      };
-
-      firestore
-        .collection('messages')
-        .add(messageData)
-        .then(() => {
-          setMessage('');
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
+      });
+      event.target.reset();
     }
-  };
-
-  Data.propTypes = {
-    user: PropTypes.shape({
-      uid: PropTypes.string.isRequired,
-      displayName: PropTypes.string.isRequired,
-    }),
   };
 
   return (
     <div>
-      <h2>Enter Data</h2>
+      <h2>Add Message</h2>
       <form onSubmit={handleSubmit}>
-        <input type="text" value={message} onChange={handleChange} />
+        <input type="text" name="message" placeholder="Enter message" />
         <button type="submit">Submit</button>
       </form>
     </div>
   );
 }
+
+Data.propTypes = {
+  user: PropTypes.shape({
+    uid: PropTypes.string.isRequired,
+    displayName: PropTypes.string.isRequired,
+  }),
+};
 
 export default Data;
