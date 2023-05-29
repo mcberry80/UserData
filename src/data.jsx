@@ -9,6 +9,7 @@ function Data({ user }) {
     if (message) {
       firestore.collection('messages').add({
         uid: user.uid,
+        displayName: user.displayName,
         text: message,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       });
