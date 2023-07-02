@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { firestore } from './firebase';
 import './MessageList.css'; // Import the CSS file for styling
 
-function MessageList() {
+function MessageList({ user }) {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ function MessageList() {
               <p className="message-text">{message.text}</p>
               <p className="message-user">@{message.displayName}</p>
             </div>
-            <button className="delete-button" onClick={() => handleDelete(message.id)}>Delete</button>
+            { (message.uid == user.uid) && <button className="delete-button" onClick={() => handleDelete(message.id)}>Delete</button> }
           </li>
         ))}
       </ul>

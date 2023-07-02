@@ -44,7 +44,7 @@ function App() {
           <p>Welcome, {user.displayName}</p>
           <button className="btn btn-primary mb-4" onClick={signOut}>Sign Out</button>
           <Data user={user} />
-          <MessageList />
+          <MessageList user={user} />
         </div>
       ) : (
         <Login signInWithGoogle={signInWithGoogle}  />
