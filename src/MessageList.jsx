@@ -20,9 +20,11 @@ function MessageList() {
 
     return () => unsubscribe();
   }, []);
+
   const handleDelete = (messageId) => {
     firestore.collection('messages').doc(messageId).delete();
   };
+  
   return (
     <div className="message-list">
       <h2>Messages</h2>
